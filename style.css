@@ -242,6 +242,49 @@ a:hover { color: var(--gold-light); }
 .whitepaper-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .whitepaper-meta { color: var(--text-dim); font-size: .82rem; }
 
+/* ===== TOKENOMICS ===== */
+.token-header {
+  display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.token-stat { text-align: center; }
+.token-stat-value {
+  display: block; font-size: 2.2rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1.2;
+}
+.token-stat-label {
+  display: block; font-size: .82rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: .06em; margin-top: 4px;
+}
+.token-distribution {
+  max-width: 700px; margin: 0 auto 48px;
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,.06);
+  border-radius: var(--radius); padding: 32px 28px;
+}
+.token-section-title {
+  font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; text-align: center;
+}
+.token-bars { display: flex; flex-direction: column; gap: 14px; }
+.token-bar-row { display: flex; align-items: center; gap: 12px; }
+.token-bar-label {
+  width: 200px; flex-shrink: 0; font-size: .85rem; color: var(--text-dim); text-align: right;
+}
+.token-bar-track {
+  flex: 1; height: 8px; background: rgba(255,255,255,.06);
+  border-radius: 4px; overflow: hidden;
+}
+.token-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+}
+.token-bar-pct {
+  width: 36px; font-size: .85rem; font-weight: 700; color: var(--gold-light);
+}
+.token-details { margin-bottom: 40px; }
+.token-cta { text-align: center; }
+
 /* ===== ECOSYSTEM CARDS ===== */
 .eco-card {
   background: var(--bg-card); border: 1px solid rgba(255,255,255,.06);
@@ -300,10 +343,15 @@ a:hover { color: var(--gold-light); }
   .hero-logo { width: 120px; height: 120px; }
   .section { padding: 72px 0; }
   .arch-items { flex-direction: column; align-items: center; }
+  .token-header { gap: 24px; }
+  .token-bar-label { width: 140px; font-size: .78rem; }
 }
 
 @media (max-width: 480px) {
   .social-links { flex-direction: column; align-items: center; }
   .perf-grid { grid-template-columns: 1fr; }
   .hero { padding: 100px 16px 60px; }
+  .token-bar-label { width: 110px; }
+  .token-header { gap: 16px; }
+  .token-stat-value { font-size: 1.6rem; }
 }
