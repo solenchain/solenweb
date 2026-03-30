@@ -47,6 +47,32 @@
     </div>
   </section>
 
+  <!-- COUNTDOWN -->
+  <section class="countdown-section">
+    <div class="container">
+      <p class="countdown-label">Mainnet Launch</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-days">--</span>
+          <span class="countdown-desc">Days</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-hours">--</span>
+          <span class="countdown-desc">Hours</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-minutes">--</span>
+          <span class="countdown-desc">Minutes</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cd-seconds">--</span>
+          <span class="countdown-desc">Seconds</span>
+        </div>
+      </div>
+      <p class="countdown-date">May 1, 2026</p>
+    </div>
+  </section>
+
   <!-- FEATURES -->
   <section class="section" id="features">
     <div class="container">
@@ -419,6 +445,24 @@
     window.addEventListener('scroll', () => {
       document.querySelector('.nav').classList.toggle('scrolled', window.scrollY > 50);
     });
+
+    // Mainnet launch countdown — May 1, 2026 00:00 UTC
+    (function() {
+      const launch = new Date('2026-05-01T00:00:00Z').getTime();
+      function tick() {
+        const diff = Math.max(0, launch - Date.now());
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+        document.getElementById('cd-minutes').textContent = String(m).padStart(2, '0');
+        document.getElementById('cd-seconds').textContent = String(s).padStart(2, '0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
   </script>
 </body>
 </html>
