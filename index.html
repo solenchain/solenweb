@@ -195,7 +195,9 @@
   <section class="section" id="technology">
     <div class="container">
       <h2 class="section-title">Architecture</h2>
-      <p class="section-sub">A modular stack built in Rust, designed for correctness, speed, and extensibility.</p>
+      <p class="section-sub">Solen is built as a modular stack written entirely in Rust, where each layer has a clear responsibility and can evolve independently. At the top, execution domains &mdash; rollups, app chains, and sovereign environments &mdash; run their own logic and submit settlement proofs down to the base layer. They never compete with each other for throughput because each domain operates in its own execution space.</p>
+      <p class="section-sub">The heart of the system is the Solen L1 settlement layer. This is where consensus happens through a BFT proof-of-stake protocol with stake-weighted proposer selection, where smart accounts provide programmable authentication and recovery, where cross-domain bridge vaults secure assets moving between rollups, and where the intent engine matches user requests with competing solvers for optimal execution. A built-in WASM virtual machine executes smart contracts with fuel metering and deterministic execution guarantees.</p>
+      <p class="section-sub">Beneath it all, data availability ensures that every piece of state can be independently verified. Solen supports both on-chain data availability for maximum security and integration with external DA layers for applications that prioritize cost efficiency. The result is an architecture that scales horizontally through rollups while maintaining the security and finality guarantees of a unified settlement layer.</p>
       <div class="arch-grid">
         <div class="arch-layer">
           <div class="arch-label">Execution Domains</div>
@@ -203,16 +205,19 @@
             <span>ZK Rollups</span>
             <span>Optimistic Rollups</span>
             <span>App Chains</span>
+            <span>Sovereign Rollups</span>
           </div>
         </div>
         <div class="arch-arrow">&#8595;</div>
         <div class="arch-layer arch-layer-highlight">
-          <div class="arch-label">Solen L1 — Settlement Layer</div>
+          <div class="arch-label">Solen L1 &mdash; Settlement Layer</div>
           <div class="arch-items">
-            <span>Consensus</span>
+            <span>BFT Consensus</span>
             <span>Smart Accounts</span>
             <span>Bridge Vaults</span>
-            <span>Intent Resolution</span>
+            <span>Intent Engine</span>
+            <span>WASM VM</span>
+            <span>Governance</span>
           </div>
         </div>
         <div class="arch-arrow">&#8595;</div>
