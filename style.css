@@ -176,10 +176,11 @@ a:hover { color: var(--gold-light); }
 }
 .testnet-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  padding: 28px 0;
-  flex-wrap: wrap;
+  gap: 16px;
+  padding: 36px 0;
+  text-align: center;
 }
 .testnet-pulse {
   width: 12px; height: 12px;
