@@ -635,6 +635,50 @@ a:hover { color: var(--gold-light); }
   color: #10b981;
   font-variant-numeric: tabular-nums;
 }
+.presale-use-of-funds {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(16,185,129,0.04);
+  border: 1px solid rgba(16,185,129,0.12);
+  border-radius: 14px;
+}
+.presale-use-of-funds h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #10b981;
+  margin-bottom: 10px;
+}
+.presale-use-of-funds p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.presale-use-of-funds ul {
+  list-style: none;
+  padding: 0;
+}
+.presale-use-of-funds li {
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  padding: 6px 0 6px 18px;
+  position: relative;
+  line-height: 1.5;
+}
+.presale-use-of-funds li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+.presale-use-of-funds li strong {
+  color: var(--text);
+}
 .presale-details {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 20px;
