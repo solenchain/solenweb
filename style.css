@@ -679,6 +679,55 @@ a:hover { color: var(--gold-light); }
 .presale-use-of-funds li strong {
   color: var(--text);
 }
+.presale-link {
+  color: #10b981;
+  text-decoration: none;
+}
+.presale-link:hover {
+  text-decoration: underline;
+  color: #34d399;
+}
+.presale-contracts {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.presale-contracts h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.presale-contracts-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+.presale-notice {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.15);
+  border-radius: 12px;
+}
+.presale-notice svg {
+  color: #f59e0b;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.presale-notice p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+.presale-notice strong {
+  color: #f59e0b;
+}
 .presale-details {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 20px;
