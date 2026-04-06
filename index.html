@@ -30,6 +30,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="apple-touch-icon" sizes="256x256" href="logo-256.png">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js" defer></script>
 </head>
 <body>
 
@@ -48,6 +49,7 @@
         <a href="#tokenomics">Tokenomics</a>
         <a href="#ecosystem">Ecosystem</a>
         <a href="#community">Community</a>
+        <a href="#presale" class="nav-presale">Presale</a>
         <a href="https://solenscan.io" class="btn btn-sm" target="_blank" rel="noopener">Explorer</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -82,6 +84,138 @@
         <div class="testnet-actions">
           <a href="https://solenscan.io" class="btn btn-outline btn-sm" target="_blank" rel="noopener">Explorer</a>
           <a href="https://docs.solenchain.io/getting-started/quick-start" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESALE -->
+  <section class="section section-dark" id="presale">
+    <div class="container">
+      <h2 class="section-title">Token Presale</h2>
+      <p class="section-sub">Get early access to SOLEN at the presale price. Purchase pSOLEN tokens with USDT on BNB Smart Chain &mdash; redeemable 1:1 for SOLEN at mainnet launch.</p>
+
+      <div class="presale-card">
+        <div class="presale-header">
+          <div class="presale-price-row">
+            <div>
+              <div class="presale-label">Price per Token</div>
+              <div class="presale-price">$0.015 <span>USDT</span></div>
+            </div>
+            <div>
+              <div class="presale-label">Network</div>
+              <div class="presale-network">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#F0B90B"><path d="M12 0L7.172 4.828l-1.414-1.414L12 -2.828l6.242 6.242-1.414 1.414L12 0zm0 24l4.828-4.828 1.414 1.414L12 26.828l-6.242-6.242 1.414-1.414L12 24zM0 12l4.828-4.828 1.414 1.414L0 14.828l-1.414-1.414L0 12zm24 0l-4.828 4.828-1.414-1.414L24 9.172l1.414 1.414L24 12zM12 7.172L16.828 12 12 16.828 7.172 12 12 7.172z"/></svg>
+                BNB Smart Chain
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="presale-progress-section">
+          <div class="presale-progress-header">
+            <span class="presale-label">Raised</span>
+            <span class="presale-raised"><span id="ps-raised">0</span> / <span id="ps-cap">250,000</span> USDT</span>
+          </div>
+          <div class="presale-progress-bar">
+            <div class="presale-progress-fill" id="ps-fill" style="width: 0%"></div>
+          </div>
+          <div class="presale-progress-footer">
+            <span id="ps-pct">0%</span>
+            <span><span id="ps-available">--</span> pSOLEN available</span>
+          </div>
+          <div class="presale-timer">
+            <span class="presale-label">Presale Ends In</span>
+            <span id="ps-timer" class="presale-timer-value">--</span>
+          </div>
+        </div>
+
+        <!-- Buy form -->
+        <div class="presale-form" id="presale-form">
+          <div id="ps-wallet-section">
+            <button class="btn btn-primary presale-connect-btn" id="ps-connect">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M16 14a2 2 0 100-4 2 2 0 000 4z"/><path d="M2 10h20"/></svg>
+              Connect Wallet
+            </button>
+          </div>
+
+          <div id="ps-buy-section" style="display:none">
+            <div class="presale-connected">
+              <span class="presale-dot"></span>
+              <span id="ps-addr">0x...</span>
+              <button class="presale-disconnect" id="ps-disconnect">Disconnect</button>
+            </div>
+
+            <div class="presale-input-group">
+              <label class="presale-label">You pay (USDT)</label>
+              <div class="presale-input-wrap">
+                <input type="number" id="ps-usdt-input" placeholder="0.00" min="10" step="any" class="presale-input">
+                <span class="presale-input-tag">USDT</span>
+              </div>
+            </div>
+
+            <div class="presale-arrow">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m0 0l-4-4m4 4l4-4"/></svg>
+            </div>
+
+            <div class="presale-input-group">
+              <label class="presale-label">You receive (pSOLEN)</label>
+              <div class="presale-input-wrap">
+                <input type="text" id="ps-token-output" placeholder="0.00" readonly class="presale-input presale-input-readonly">
+                <span class="presale-input-tag">pSOLEN</span>
+              </div>
+            </div>
+
+            <div class="presale-info-row">
+              <span>Your USDT balance:</span>
+              <span id="ps-usdt-bal">--</span>
+            </div>
+            <div class="presale-info-row">
+              <span>Your pSOLEN balance:</span>
+              <span id="ps-psolen-bal">--</span>
+            </div>
+
+            <button class="btn btn-primary presale-buy-btn" id="ps-buy-btn" disabled>
+              Enter an amount
+            </button>
+            <div class="presale-status" id="ps-status"></div>
+          </div>
+        </div>
+
+        <div class="presale-details">
+          <div class="presale-detail-item">
+            <span>Token</span>
+            <span>pSOLEN (BEP20)</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Price</span>
+            <span>1 pSOLEN = 0.015 USDT</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Hard Cap</span>
+            <span>250,000 USDT</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Min Purchase</span>
+            <span>10 USDT</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Ends</span>
+            <span>May 1, 2026</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Vesting</span>
+            <span>None &mdash; fully unlocked</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>Redemption</span>
+            <span>1:1 for SOLEN at mainnet launch</span>
+          </div>
+          <div class="presale-detail-item">
+            <span>KYC</span>
+            <span>Not required &mdash; open to all</span>
+          </div>
         </div>
       </div>
     </div>
@@ -506,6 +640,260 @@
       }
       tick();
       setInterval(tick, 1000);
+    })();
+
+    // ===== PRESALE =====
+    (function() {
+      const BSC_CHAIN_ID = '0x38'; // 56
+      const USDT_ADDR  = '0x55d398326f99059fF775485246999027B3197955';
+      const PRESALE_ADDR = '0x415cD811a98711401B55651225cb19062599dF9b';
+      const PSOLEN_ADDR  = '0xE1A388D7682C98908b798352e3D415a386cB96b8';
+
+      // Minimal ABI fragments
+      const ERC20_ABI = [
+        'function balanceOf(address) view returns (uint256)',
+        'function allowance(address,address) view returns (uint256)',
+        'function approve(address,uint256) returns (bool)',
+        'function decimals() view returns (uint8)'
+      ];
+      const PRESALE_ABI = [
+        'function buy(uint256 usdtAmount)',
+        'function totalRaised() view returns (uint256)',
+        'function hardCap() view returns (uint256)',
+        'function contributed(address) view returns (uint256)',
+        'function maxPerWallet() view returns (uint256)',
+        'function minBuy() view returns (uint256)',
+        'function endTime() view returns (uint256)',
+        'function paused() view returns (bool)',
+        'function tokensAvailable() view returns (uint256)',
+        'function estimateTokens(uint256) view returns (uint256)'
+      ];
+
+      const PRESALE_END = new Date('2026-05-01T00:00:00Z').getTime();
+
+      let provider, signer, userAddr;
+
+      const $connect    = document.getElementById('ps-connect');
+      const $walletSec  = document.getElementById('ps-wallet-section');
+      const $buySec     = document.getElementById('ps-buy-section');
+      const $addr       = document.getElementById('ps-addr');
+      const $disconnect = document.getElementById('ps-disconnect');
+      const $usdtInput  = document.getElementById('ps-usdt-input');
+      const $tokenOut   = document.getElementById('ps-token-output');
+      const $buyBtn     = document.getElementById('ps-buy-btn');
+      const $status     = document.getElementById('ps-status');
+      const $usdtBal    = document.getElementById('ps-usdt-bal');
+      const $psolenBal  = document.getElementById('ps-psolen-bal');
+      const $raised     = document.getElementById('ps-raised');
+      const $cap        = document.getElementById('ps-cap');
+      const $fill       = document.getElementById('ps-fill');
+      const $pct        = document.getElementById('ps-pct');
+      const $available  = document.getElementById('ps-available');
+
+      function fmt(wei, dec) {
+        dec = dec || 18;
+        const s = wei.toString().padStart(dec + 1, '0');
+        const whole = s.slice(0, s.length - dec) || '0';
+        const frac = s.slice(s.length - dec, s.length - dec + 2);
+        return Number(whole + '.' + frac).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function fmtShort(wei) {
+        const n = Number(wei) / 1e18;
+        if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+        if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+        return n.toFixed(2);
+      }
+
+      function setStatus(msg, type) {
+        $status.textContent = msg;
+        $status.className = 'presale-status ' + (type || '');
+      }
+
+      // Load global stats (works without wallet)
+      async function loadStats() {
+        if (!PRESALE_ADDR || !PSOLEN_ADDR) return;
+        try {
+          const rpc = new ethers.JsonRpcProvider('https://bsc-dataseed.binance.org/');
+          const presale = new ethers.Contract(PRESALE_ADDR, PRESALE_ABI, rpc);
+          const [raised, cap, avail] = await Promise.all([
+            presale.totalRaised(),
+            presale.hardCap(),
+            presale.tokensAvailable()
+          ]);
+          const raisedN = Number(raised) / 1e18;
+          const capN = Number(cap) / 1e18;
+          const pctN = capN > 0 ? (raisedN / capN * 100) : 0;
+          $raised.textContent = raisedN.toLocaleString(undefined, { maximumFractionDigits: 0 });
+          $cap.textContent = capN.toLocaleString(undefined, { maximumFractionDigits: 0 });
+          $fill.style.width = pctN.toFixed(1) + '%';
+          $pct.textContent = pctN.toFixed(1) + '%';
+          $available.textContent = fmtShort(avail);
+        } catch(e) { console.warn('presale stats:', e); }
+      }
+
+      async function loadBalances() {
+        if (!signer || !userAddr) return;
+        try {
+          const usdt = new ethers.Contract(USDT_ADDR, ERC20_ABI, signer);
+          const psolen = new ethers.Contract(PSOLEN_ADDR, ERC20_ABI, signer);
+          const [uBal, pBal] = await Promise.all([
+            usdt.balanceOf(userAddr),
+            psolen.balanceOf(userAddr)
+          ]);
+          $usdtBal.textContent = fmt(uBal) + ' USDT';
+          $psolenBal.textContent = fmt(pBal) + ' pSOLEN';
+        } catch(e) { console.warn('balance load:', e); }
+      }
+
+      async function ensureBSC() {
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (chainId !== BSC_CHAIN_ID) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: BSC_CHAIN_ID }]
+            });
+          } catch (e) {
+            if (e.code === 4902) {
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: BSC_CHAIN_ID,
+                  chainName: 'BNB Smart Chain',
+                  nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+                  rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                  blockExplorerUrls: ['https://bscscan.com/']
+                }]
+              });
+            } else { throw e; }
+          }
+        }
+      }
+
+      $connect.addEventListener('click', async () => {
+        if (!window.ethereum) {
+          setStatus('Please install MetaMask or a compatible wallet.', 'error');
+          return;
+        }
+        try {
+          setStatus('Connecting...', 'pending');
+          await ensureBSC();
+          provider = new ethers.BrowserProvider(window.ethereum);
+          signer = await provider.getSigner();
+          userAddr = await signer.getAddress();
+          $addr.textContent = userAddr.slice(0, 6) + '...' + userAddr.slice(-4);
+          $walletSec.style.display = 'none';
+          $buySec.style.display = 'block';
+          setStatus('');
+          loadBalances();
+        } catch(e) {
+          setStatus(e.message || 'Connection failed', 'error');
+        }
+      });
+
+      $disconnect.addEventListener('click', () => {
+        provider = signer = userAddr = null;
+        $walletSec.style.display = '';
+        $buySec.style.display = 'none';
+        $usdtInput.value = '';
+        $tokenOut.value = '';
+        setStatus('');
+      });
+
+      $usdtInput.addEventListener('input', () => {
+        const val = parseFloat($usdtInput.value);
+        if (!val || val <= 0) {
+          $tokenOut.value = '';
+          $buyBtn.textContent = 'Enter an amount';
+          $buyBtn.disabled = true;
+          return;
+        }
+        const tokens = val / 0.015;
+        $tokenOut.value = tokens.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        if (val < 10) {
+          $buyBtn.textContent = 'Minimum 10 USDT';
+          $buyBtn.disabled = true;
+        } else {
+          $buyBtn.textContent = 'Buy pSOLEN';
+          $buyBtn.disabled = false;
+        }
+      });
+
+      $buyBtn.addEventListener('click', async () => {
+        if (!signer || !PRESALE_ADDR) return;
+        if (Date.now() >= PRESALE_END) {
+          setStatus('Presale has ended.', 'error');
+          return;
+        }
+        const usdtAmount = parseFloat($usdtInput.value);
+        if (!usdtAmount || usdtAmount < 10) return;
+
+        const amountWei = ethers.parseUnits(usdtAmount.toString(), 18);
+        const usdt = new ethers.Contract(USDT_ADDR, ERC20_ABI, signer);
+        const presale = new ethers.Contract(PRESALE_ADDR, PRESALE_ABI, signer);
+
+        try {
+          $buyBtn.disabled = true;
+
+          // Check allowance
+          setStatus('Checking USDT allowance...', 'pending');
+          const allowance = await usdt.allowance(userAddr, PRESALE_ADDR);
+          if (allowance < amountWei) {
+            setStatus('Approving USDT spend... please confirm in wallet', 'pending');
+            const approveTx = await usdt.approve(PRESALE_ADDR, amountWei);
+            setStatus('Waiting for approval confirmation...', 'pending');
+            await approveTx.wait();
+          }
+
+          // Buy
+          setStatus('Purchasing pSOLEN... please confirm in wallet', 'pending');
+          const buyTx = await presale.buy(amountWei);
+          setStatus('Waiting for transaction confirmation...', 'pending');
+          await buyTx.wait();
+
+          setStatus('Purchase successful!', 'success');
+          $usdtInput.value = '';
+          $tokenOut.value = '';
+          $buyBtn.textContent = 'Enter an amount';
+          loadBalances();
+          loadStats();
+        } catch(e) {
+          const msg = e.reason || e.message || 'Transaction failed';
+          setStatus(msg.length > 100 ? msg.slice(0, 100) + '...' : msg, 'error');
+        } finally {
+          $buyBtn.disabled = false;
+        }
+      });
+
+      // Listen for account/chain changes
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged', () => location.reload());
+        window.ethereum.on('chainChanged', () => location.reload());
+      }
+
+      // Presale countdown
+      const $timer = document.getElementById('ps-timer');
+      function tickPresale() {
+        const diff = Math.max(0, PRESALE_END - Date.now());
+        if (diff === 0) {
+          $timer.textContent = 'Presale Ended';
+          $buyBtn.disabled = true;
+          $buyBtn.textContent = 'Presale Ended';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        $timer.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
+      }
+      tickPresale();
+      setInterval(tickPresale, 1000);
+
+      // Load stats on page load
+      loadStats();
+      setInterval(loadStats, 30000);
     })();
   </script>
 </body>
