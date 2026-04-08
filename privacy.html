@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Solen Wallet</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #e8e8ed;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    h1 span { color: #10b981; }
+    .subtitle {
+      color: #9a9ab0;
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 36px;
+      margin-bottom: 12px;
+      color: #e8e8ed;
+    }
+    p, li {
+      color: #b0b0c0;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+    ul {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+    a { color: #10b981; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #9a9ab0;
+      font-size: 0.85rem;
+    }
+    .back:hover { color: #10b981; }
+    .updated {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: #6a6a80;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">&larr; Back to solenchain.io</a>
+
+    <h1><span>Solen</span> Wallet Privacy Policy</h1>
+    <p class="subtitle">This policy applies to the Solen Wallet browser extension and desktop application.</p>
+
+    <h2>Summary</h2>
+    <p>Solen Wallet is designed with privacy as a core principle. Your keys, accounts, and transaction data stay on your device. We do not collect, store, or transmit any personal information to our servers.</p>
+
+    <h2>Data We Do Not Collect</h2>
+    <ul>
+      <li>We do not collect personal information, email addresses, or IP addresses</li>
+      <li>We do not track your browsing activity or websites you visit</li>
+      <li>We do not have access to your private keys, passwords, or seed phrases</li>
+      <li>We do not store any user data on external servers</li>
+      <li>We do not use analytics, tracking pixels, or third-party tracking services</li>
+    </ul>
+
+    <h2>Data Stored Locally on Your Device</h2>
+    <p>The following data is stored locally in your browser's extension storage (chrome.storage) or on your device's filesystem for the desktop application:</p>
+    <ul>
+      <li><strong>Account information</strong> — account names, public keys, and encrypted private keys</li>
+      <li><strong>Wallet password hash</strong> — a bcrypt hash of your password for local verification (your password is never stored in plain text)</li>
+      <li><strong>Network preferences</strong> — your selected network (mainnet, testnet, devnet)</li>
+      <li><strong>Connected sites</strong> — a list of websites you have approved to connect to your wallet</li>
+      <li><strong>Lock timeout setting</strong> — your auto-lock preference</li>
+    </ul>
+    <p>All sensitive data (private keys) is encrypted with your wallet password before being stored. The encryption key is derived from your password and never leaves your device.</p>
+
+    <h2>Network Communication</h2>
+    <p>The wallet communicates with the Solen blockchain network for the following purposes only:</p>
+    <ul>
+      <li><strong>Balance queries</strong> — fetching your account balance and token balances from the Solen RPC node</li>
+      <li><strong>Transaction history</strong> — fetching recent transactions from the Solen explorer API</li>
+      <li><strong>Transaction submission</strong> — submitting signed transactions to the Solen network when you approve a send or dApp interaction</li>
+    </ul>
+    <p>These requests are made directly to public Solen blockchain infrastructure (RPC nodes and explorer APIs). No data passes through intermediary servers controlled by us.</p>
+
+    <h2>dApp Interactions</h2>
+    <p>When a website requests to connect to your wallet:</p>
+    <ul>
+      <li>You are shown a clear approval prompt with the website's origin</li>
+      <li>No data is shared until you explicitly approve</li>
+      <li>You can disconnect any site at any time</li>
+      <li>Connected sites can only see your public account address — they cannot access your private keys or sign transactions without your explicit approval for each transaction</li>
+    </ul>
+
+    <h2>Permissions</h2>
+    <p>The browser extension requests the following permissions:</p>
+    <ul>
+      <li><strong>storage</strong> — to save your encrypted wallet data locally</li>
+      <li><strong>activeTab</strong> — to inject the wallet provider (window.solen) into web pages so dApps can interact with the wallet</li>
+    </ul>
+
+    <h2>Open Source</h2>
+    <p>The Solen Wallet is open source. You can inspect the source code to verify these privacy claims at <a href="https://github.com/Solen-Blockchain" target="_blank" rel="noopener">github.com/Solen-Blockchain</a>.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>Solen Wallet is not directed at children under 13. We do not knowingly collect information from children.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this privacy policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+
+    <h2>Contact</h2>
+    <p>If you have questions about this privacy policy, you can reach us at:</p>
+    <ul>
+      <li>Discord: <a href="https://discord.com/invite/QGxv8bebJc" target="_blank" rel="noopener">discord.com/invite/QGxv8bebJc</a></li>
+      <li>Telegram: <a href="https://t.me/solenblockchain" target="_blank" rel="noopener">t.me/solenblockchain</a></li>
+      <li>X: <a href="https://x.com/solenchain" target="_blank" rel="noopener">@solenchain</a></li>
+    </ul>
+
+    <div class="updated">
+      <p>Effective date: April 8, 2026</p>
+      <p>&copy; 2026 Solen Foundation. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
