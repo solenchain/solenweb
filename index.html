@@ -531,6 +531,85 @@
         </div>
       </div>
 
+      <!-- Vesting Schedule -->
+      <div class="token-distribution" style="margin-top: 40px;">
+        <h3 class="token-section-title">Vesting &amp; Unlock Schedule</h3>
+        <p class="section-sub" style="max-width:700px; margin: 0 auto 24px;">All allocations are subject to on-chain vesting locks enforced by the protocol. Tokens are released gradually to ensure long-term alignment.</p>
+        <div class="vesting-table">
+          <div class="vesting-header">
+            <span>Allocation</span>
+            <span>Amount</span>
+            <span>Cliff</span>
+            <span>Vesting</span>
+            <span>At Launch</span>
+          </div>
+          <div class="vesting-row">
+            <span>Staking &amp; Validator Rewards</span>
+            <span>500M (25%)</span>
+            <span>None</span>
+            <span>10 years linear</span>
+            <span>0%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Foundation Treasury</span>
+            <span>400M (20%)</span>
+            <span>6 months</span>
+            <span>4 years linear</span>
+            <span>0%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Team &amp; Founders</span>
+            <span>300M (15%)</span>
+            <span>12 months</span>
+            <span>3 years linear</span>
+            <span>0%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Ecosystem Fund</span>
+            <span>300M (15%)</span>
+            <span>3 months</span>
+            <span>3 years linear</span>
+            <span>0%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Community &amp; Airdrops</span>
+            <span>200M (10%)</span>
+            <span>None</span>
+            <span>2 years linear</span>
+            <span>5%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Early Investors</span>
+            <span>100M (5%)</span>
+            <span>6 months</span>
+            <span>2 years linear</span>
+            <span>0%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Genesis Validators</span>
+            <span>100M (5%)</span>
+            <span>None</span>
+            <span>1 year linear</span>
+            <span>10%</span>
+          </div>
+          <div class="vesting-row">
+            <span>Liquidity &amp; Market Making</span>
+            <span>100M (5%)</span>
+            <span>None</span>
+            <span>Unlocked</span>
+            <span>100%</span>
+          </div>
+          <div class="vesting-row vesting-total">
+            <span>Total at Launch</span>
+            <span>2B (100%)</span>
+            <span></span>
+            <span></span>
+            <span>~6.5%</span>
+          </div>
+        </div>
+        <p style="text-align:center; font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 16px;">Only ~130M SOLEN (~6.5%) is circulating at mainnet launch. All other tokens are locked in on-chain vesting contracts.</p>
+      </div>
+
       <div class="token-cta">
         <a href="https://docs.solenchain.io/tokenomics/overview/" class="btn btn-outline" target="_blank" rel="noopener">Full Tokenomics Details &rarr;</a>
       </div>
@@ -587,6 +666,42 @@
           </a>
         </div>
         <p class="wallet-note">Windows, macOS, Linux</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLENDEX SHOWCASE -->
+  <section class="section section-dark" id="solendex">
+    <div class="container">
+      <h2 class="section-title">SolenDEX</h2>
+      <p class="section-sub">A proof-of-concept L2 rollup order book DEX demonstrating Solen's native rollup settlement. Transactions are batched on L2 and committed to L1 with fraud proof verification.</p>
+      <div class="dex-showcase">
+        <img src="solendex.png" alt="SolenDEX — L2 Rollup Order Book DEX" class="dex-screenshot" loading="lazy">
+        <div class="dex-features">
+          <div class="dex-feature">
+            <strong>L2 Rollup</strong>
+            <span>Optimistic rollup with deterministic state replay and fraud proof challenger</span>
+          </div>
+          <div class="dex-feature">
+            <strong>Order Book</strong>
+            <span>Central limit order book with price-time priority matching, limit &amp; market orders</span>
+          </div>
+          <div class="dex-feature">
+            <strong>L1 Settlement</strong>
+            <span>Periodic batch commitments to Solen L1 with state root verification</span>
+          </div>
+          <div class="dex-feature">
+            <strong>Bridge</strong>
+            <span>Automatic deposit detection from L1 and withdrawal settlement back to L1</span>
+          </div>
+        </div>
+        <div class="dex-actions">
+          <a href="https://solendex.io" class="btn btn-primary" target="_blank" rel="noopener">View it in Action</a>
+          <a href="https://github.com/Solen-Blockchain/solendex" class="btn btn-outline" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="margin-right:6px;"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View Source Code
+          </a>
+        </div>
       </div>
     </div>
   </section>
