@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://solenchain.io">
   <meta property="og:title" content="Solen — The Settlement Layer for the Modular Future">
-  <meta property="og:description" content="High-performance L1 blockchain with native rollups, smart accounts, and intent-driven execution. 15,000+ TPS with full signature verification.">
+  <meta property="og:description" content="High-performance L1 blockchain with native rollups, smart accounts, and intent-driven execution. 1,200+ TPS with sub-second finality.">
   <meta property="og:image" content="https://solenchain.io/solenlogo.png">
   <meta property="og:site_name" content="Solen">
 
@@ -337,37 +337,90 @@
   <section class="section section-dark" id="performance">
     <div class="container">
       <h2 class="section-title">Built for Speed</h2>
-      <p class="section-sub">Benchmarked throughput on real workloads. Full Ed25519 signature verification on every operation.</p>
+      <p class="section-sub">Benchmarked on a live 4-validator testnet with BFT consensus, full Ed25519 signature verification, and deterministic single-slot finality.</p>
       <div class="perf-hero-number">
-        <span class="perf-big">15,600</span>
-        <span class="perf-unit">TPS peak throughput</span>
+        <span class="perf-big">1,200+</span>
+        <span class="perf-unit">TPS on live testnet</span>
       </div>
       <div class="perf-grid">
         <div class="perf-card perf-card-highlight">
-          <div class="perf-value">15,357</div>
-          <div class="perf-label">Transfers (10K batch)</div>
-          <div class="perf-bar"><div class="perf-bar-fill" style="width: 100%"></div></div>
+          <div class="perf-value">&lt; 1s</div>
+          <div class="perf-label">Finality</div>
+          <div class="perf-detail">Single-slot BFT &mdash; deterministic, not probabilistic</div>
         </div>
         <div class="perf-card">
-          <div class="perf-value">15,600</div>
-          <div class="perf-label">Transfers (1K batch)</div>
-          <div class="perf-bar"><div class="perf-bar-fill" style="width: 100%"></div></div>
+          <div class="perf-value">5,000</div>
+          <div class="perf-label">Max ops per block</div>
+          <div class="perf-detail">Parallel signature verification, sequential state application</div>
         </div>
         <div class="perf-card">
-          <div class="perf-value">13,922</div>
-          <div class="perf-label">Transfers (100 batch)</div>
-          <div class="perf-bar"><div class="perf-bar-fill" style="width: 89%"></div></div>
+          <div class="perf-value">10K+</div>
+          <div class="perf-label">Ingestion rate</div>
+          <div class="perf-detail">Transactions accepted per second at the RPC layer</div>
         </div>
-        <div class="perf-card perf-card-highlight">
-          <div class="perf-value">10,398</div>
-          <div class="perf-label">Contract calls (1K batch)</div>
-          <div class="perf-bar"><div class="perf-bar-fill" style="width: 67%"></div></div>
+      </div>
+
+      <!-- Chain Comparison -->
+      <div class="comparison">
+        <h3 class="comparison-title">How Solen Compares</h3>
+        <div class="comparison-table-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Chain</th>
+                <th>TPS (Real-world)</th>
+                <th>Finality</th>
+                <th>Block Time</th>
+                <th>Consensus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="comparison-highlight">
+                <td><strong>Solen</strong></td>
+                <td><strong>1,200+</strong></td>
+                <td><strong>&lt; 1s</strong></td>
+                <td><strong>~2s</strong></td>
+                <td>BFT PoS</td>
+              </tr>
+              <tr>
+                <td>Ethereum</td>
+                <td>~15</td>
+                <td>~13 min</td>
+                <td>12s</td>
+                <td>Gasper PoS</td>
+              </tr>
+              <tr>
+                <td>BNB Chain</td>
+                <td>~100-300</td>
+                <td>~7.5s</td>
+                <td>3s</td>
+                <td>PoSA</td>
+              </tr>
+              <tr>
+                <td>Solana</td>
+                <td>~3,000-4,000</td>
+                <td>~12s</td>
+                <td>0.4s</td>
+                <td>PoH + Tower BFT</td>
+              </tr>
+              <tr>
+                <td>Avalanche C</td>
+                <td>~350</td>
+                <td>~2s</td>
+                <td>2s</td>
+                <td>Snowman</td>
+              </tr>
+              <tr>
+                <td>Polygon PoS</td>
+                <td>~100-200</td>
+                <td>~2 min</td>
+                <td>2s</td>
+                <td>PoS + Checkpoints</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="perf-card">
-          <div class="perf-value">8,228</div>
-          <div class="perf-label">Contract calls (100 batch)</div>
-          <div class="perf-bar"><div class="perf-bar-fill" style="width: 53%"></div></div>
-        </div>
+        <p class="comparison-note">Solen TPS measured on a 4-validator testnet with full BFT quorum, Ed25519 signature verification, and deterministic state application. Competitor numbers from public benchmarks and real-world usage.</p>
       </div>
     </div>
   </section>
