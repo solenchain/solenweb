@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solen Bridge — Transfer SOLEN between Solen and Base</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .bridge-page { min-height: 100vh; padding: 100px 20px 60px; }
+    .bridge-container { max-width: 480px; margin: 0 auto; }
+    .bridge-header { text-align: center; margin-bottom: 32px; }
+    .bridge-header h1 { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .bridge-header p { color: var(--text-dim); font-size: .95rem; }
+
+    .bridge-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    /* Wallet connection row */
+    .wallets {
+      display: flex; gap: 8px; margin-bottom: 20px;
+    }
+    .wallet-box {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .wallet-box:hover { border-color: rgba(255,255,255,.2); }
+    .wallet-box.connected { border-color: rgba(22,163,74,.4); background: rgba(22,163,74,.06); }
+    .wallet-box .label { font-size: .75rem; color: var(--text-dim); margin-bottom: 4px; }
+    .wallet-box .addr { font-size: .7rem; font-family: monospace; color: var(--text); }
+    .wallet-box .not-connected { font-size: .8rem; color: var(--gold); font-weight: 600; }
+
+    /* Direction */
+    .bridge-direction { display: flex; gap: 8px; margin-bottom: 20px; }
+    .bridge-dir-btn {
+      flex: 1; padding: 10px; border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; background: transparent; color: var(--text-dim);
+      font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .bridge-dir-btn.active { background: rgba(245,166,35,.1); border-color: rgba(245,166,35,.4); color: var(--gold); }
+    .bridge-dir-btn:hover:not(.active) { border-color: rgba(255,255,255,.2); color: var(--text); }
+
+    /* Fields */
+    .bridge-field { margin-bottom: 16px; }
+    .bridge-field label {
+      display: block; font-size: .8rem; color: var(--text-dim); margin-bottom: 6px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .bridge-field .balance-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .bridge-field .balance { font-size: .8rem; color: var(--gold); cursor: pointer; }
+    .bridge-field input {
+      width: 100%; padding: 12px 14px; background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1); border-radius: 10px;
+      color: var(--text); font-size: 1rem; outline: none; transition: border-color .2s;
+    }
+    .bridge-field input:focus { border-color: rgba(245,166,35,.4); }
+    .bridge-field input::placeholder { color: rgba(255,255,255,.2); }
+    .bridge-field input:read-only { opacity: .6; }
+
+    .arrow-row { text-align: center; margin: 8px 0; font-size: 1.2rem; color: var(--gold); }
+
+    /* Buttons */
+    .bridge-submit {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: #000; font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: opacity .2s; margin-top: 8px;
+    }
+    .bridge-submit:hover { opacity: .9; }
+    .bridge-submit:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* Status */
+    .bridge-status {
+      margin-top: 16px; padding: 12px 14px; border-radius: 10px;
+      font-size: .9rem; text-align: center; display: none;
+    }
+    .bridge-status.success { display: block; background: rgba(22,163,74,.1); color: #22c55e; border: 1px solid rgba(22,163,74,.2); }
+    .bridge-status.error { display: block; background: rgba(220,38,38,.1); color: #ef4444; border: 1px solid rgba(220,38,38,.2); }
+    .bridge-status.pending { display: block; background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid rgba(245,166,35,.2); }
+
+    .bridge-info {
+      margin-top: 20px; padding: 14px; background: rgba(255,255,255,.02);
+      border-radius: 10px; font-size: .85rem; color: var(--text-dim); line-height: 1.6;
+    }
+    .bridge-info .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .bridge-info .row .val { color: var(--text); font-weight: 600; }
+
+    .bridge-footer { text-align: center; margin-top: 24px; font-size: .8rem; color: var(--text-dim); }
+    .bridge-footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" style="background: rgba(10,10,15,.95); backdrop-filter: blur(16px);">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="solenlogo.png" alt="Solen" class="nav-logo-img">
+        <span class="nav-logo-text">Solen</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/bridge" style="color: var(--gold); font-weight: 700;">Bridge</a>
+        <a href="https://solenscan.io" class="btn btn-sm" target="_blank" rel="noopener">Explorer</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bridge-page">
+    <div class="bridge-container">
+      <div class="bridge-header">
+        <img src="solenlogo.png" alt="Solen" width="48" height="48" style="margin-bottom: 12px;">
+        <h1>Solen Bridge</h1>
+        <p>Transfer SOLEN between the Solen network and Base chain</p>
+      </div>
+
+      <div class="bridge-card">
+        <!-- Wallet connections -->
+        <div class="wallets">
+          <div class="wallet-box" id="solenWalletBox" onclick="connectSolenWallet()">
+            <div class="label">Solen Wallet</div>
+            <div class="not-connected" id="solenWalletStatus">Connect</div>
+          </div>
+          <div class="wallet-box" id="baseWalletBox" onclick="connectBaseWallet()">
+            <div class="label">MetaMask (Base)</div>
+            <div class="not-connected" id="baseWalletStatus">Connect</div>
+          </div>
+        </div>
+
+        <!-- Direction -->
+        <div class="bridge-direction">
+          <button class="bridge-dir-btn active" id="dirSolenToBase" onclick="setDirection('solen-to-base')">
+            Solen &rarr; Base
+          </button>
+          <button class="bridge-dir-btn" id="dirBaseToSolen" onclick="setDirection('base-to-solen')">
+            Base &rarr; Solen
+          </button>
+        </div>
+
+        <!-- From -->
+        <div class="bridge-field">
+          <div class="balance-row">
+            <label id="fromLabel">From (SOLEN)</label>
+            <span class="balance" id="fromBalance" onclick="setMax()">Balance: --</span>
+          </div>
+          <input type="number" id="amountInput" placeholder="0.00" step="any" min="0">
+        </div>
+
+        <div class="arrow-row">&darr;</div>
+
+        <!-- To -->
+        <div class="bridge-field">
+          <label id="toLabel">To (wSOLEN on Base)</label>
+          <input type="text" id="toAddress" placeholder="Recipient address" readonly>
+        </div>
+
+        <button class="bridge-submit" id="bridgeBtn" onclick="executeBridge()" disabled>
+          Connect Both Wallets
+        </button>
+
+        <div class="bridge-status" id="statusMsg"></div>
+      </div>
+
+      <div class="bridge-info">
+        <div class="row"><span>wSOLEN (Base)</span><span class="val" style="font-size:.75rem;font-family:monospace;">0x2774FF...fCe8F</span></div>
+        <div class="row"><span>Bridge (Base)</span><span class="val" style="font-size:.75rem;font-family:monospace;">0x114E53...bbAD</span></div>
+        <div class="row"><span>Network</span><span class="val">Base Sepolia Testnet</span></div>
+        <div class="row"><span>Bridged</span><span class="val" id="bridgedTotal">--</span></div>
+      </div>
+
+      <div class="bridge-footer">
+        <p>
+          <a href="https://sepolia.basescan.org/address/0x2774FF63879Ae11CC6763538Ec1133d2907fCe8F" target="_blank">wSOLEN on BaseScan</a>
+          &middot;
+          <a href="https://sepolia.basescan.org/address/0x114E53baa3A49A3D1F28DCaBdF27EF13EF19bbAD" target="_blank">Bridge on BaseScan</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+  <script>
+    // Contract addresses
+    const WSOLEN_ADDRESS = "0x2774FF63879Ae11CC6763538Ec1133d2907fCe8F";
+    const BRIDGE_ADDRESS = "0x114E53baa3A49A3D1F28DCaBdF27EF13EF19bbAD";
+    const BASE_SEPOLIA_CHAIN_ID = "0x14a34";
+    const SOLEN_RPC = "https://testnet-rpc.solenchain.io";
+    const BRIDGE_SYSTEM_ADDR = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03";
+
+    const WSOLEN_ABI = [
+      "function balanceOf(address) view returns (uint256)",
+      "function approve(address,uint256) returns (bool)",
+      "function allowance(address,address) view returns (uint256)",
+    ];
+    const BRIDGE_ABI = [
+      "function bridgeToSolen(bytes32,uint256) external",
+      "function bridgeStats() view returns (uint256,uint256,uint256,bool,uint256)",
+    ];
+
+    // State
+    let direction = "solen-to-base";
+    let solenAddress = null;   // Solen account ID (Base58)
+    let solenAddressHex = null;
+    let baseAddress = null;    // Base/MetaMask address
+    let baseSigner = null;
+    let baseProvider = null;
+    let solenBalance = null;
+    let wsolenBalance = null;
+
+    // Direction
+    function setDirection(dir) {
+      direction = dir;
+      document.getElementById("dirSolenToBase").classList.toggle("active", dir === "solen-to-base");
+      document.getElementById("dirBaseToSolen").classList.toggle("active", dir === "base-to-solen");
+      clearStatus();
+      updateUI();
+    }
+
+    function updateUI() {
+      if (direction === "solen-to-base") {
+        document.getElementById("fromLabel").textContent = "From (SOLEN)";
+        document.getElementById("toLabel").textContent = "To (wSOLEN on Base)";
+        document.getElementById("toAddress").value = baseAddress || "";
+        document.getElementById("fromBalance").textContent = solenBalance !== null ? `Balance: ${solenBalance} SOLEN` : "Balance: --";
+      } else {
+        document.getElementById("fromLabel").textContent = "From (wSOLEN on Base)";
+        document.getElementById("toLabel").textContent = "To (SOLEN on Solen)";
+        document.getElementById("toAddress").value = solenAddress || "";
+        document.getElementById("fromBalance").textContent = wsolenBalance !== null ? `Balance: ${wsolenBalance} wSOLEN` : "Balance: --";
+      }
+      updateButton();
+    }
+
+    function updateButton() {
+      const btn = document.getElementById("bridgeBtn");
+      if (!solenAddress && !baseAddress) {
+        btn.textContent = "Connect Both Wallets";
+        btn.disabled = true;
+      } else if (direction === "solen-to-base" && !solenAddress) {
+        btn.textContent = "Connect Solen Wallet";
+        btn.disabled = true;
+      } else if (direction === "base-to-solen" && !baseAddress) {
+        btn.textContent = "Connect MetaMask";
+        btn.disabled = true;
+      } else if (direction === "solen-to-base" && !baseAddress) {
+        btn.textContent = "Connect MetaMask for Recipient";
+        btn.disabled = true;
+      } else if (direction === "base-to-solen" && !solenAddress) {
+        btn.textContent = "Connect Solen Wallet for Recipient";
+        btn.disabled = true;
+      } else {
+        btn.textContent = direction === "solen-to-base" ? "Bridge to Base" : "Bridge to Solen";
+        btn.disabled = false;
+      }
+    }
+
+    function setMax() {
+      const bal = direction === "solen-to-base" ? solenBalance : wsolenBalance;
+      if (bal) document.getElementById("amountInput").value = bal;
+    }
+
+    // Solen Wallet
+    async function connectSolenWallet() {
+      if (!window.solen) {
+        showStatus("Solen Wallet not detected. Install from Chrome Web Store.", "error");
+        return;
+      }
+      try {
+        const accounts = await window.solen.connect();
+        if (accounts.length > 0) {
+          solenAddress = accounts[0];
+          solenAddressHex = base58ToHex(solenAddress);
+          document.getElementById("solenWalletBox").classList.add("connected");
+          document.getElementById("solenWalletStatus").innerHTML =
+            `<span class="addr">${solenAddress.slice(0,6)}...${solenAddress.slice(-4)}</span>`;
+          await fetchSolenBalance();
+          updateUI();
+        }
+      } catch (err) {
+        showStatus("Solen Wallet: " + err.message, "error");
+      }
+    }
+
+    async function fetchSolenBalance() {
+      if (!solenAddress) return;
+      try {
+        const resp = await fetch(SOLEN_RPC, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "solen_getBalance", params: [solenAddress] }),
+        });
+        const json = await resp.json();
+        const raw = BigInt(json.result || "0");
+        solenBalance = (Number(raw) / 1e8).toFixed(2);
+        updateUI();
+      } catch {}
+    }
+
+    // MetaMask / Base Wallet
+    async function connectBaseWallet() {
+      if (!window.ethereum) {
+        showStatus("MetaMask not detected. Please install MetaMask.", "error");
+        return;
+      }
+      try {
+        try {
+          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: BASE_SEPOLIA_CHAIN_ID }] });
+        } catch (switchErr) {
+          if (switchErr.code === 4902) {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [{ chainId: BASE_SEPOLIA_CHAIN_ID, chainName: "Base Sepolia", nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 }, rpcUrls: ["https://sepolia.base.org"], blockExplorerUrls: ["https://sepolia.basescan.org"] }],
+            });
+          }
+        }
+        baseProvider = new ethers.BrowserProvider(window.ethereum);
+        baseSigner = await baseProvider.getSigner();
+        baseAddress = await baseSigner.getAddress();
+
+        document.getElementById("baseWalletBox").classList.add("connected");
+        document.getElementById("baseWalletStatus").innerHTML =
+          `<span class="addr">${baseAddress.slice(0,6)}...${baseAddress.slice(-4)}</span>`;
+
+        await fetchWsolenBalance();
+        updateUI();
+      } catch (err) {
+        showStatus("MetaMask: " + err.message, "error");
+      }
+    }
+
+    async function fetchWsolenBalance() {
+      if (!baseProvider || !baseAddress) return;
+      try {
+        const wSOLEN = new ethers.Contract(WSOLEN_ADDRESS, WSOLEN_ABI, baseProvider);
+        const bal = await wSOLEN.balanceOf(baseAddress);
+        wsolenBalance = ethers.formatUnits(bal, 8);
+        updateUI();
+      } catch {}
+    }
+
+    // Execute bridge
+    async function executeBridge() {
+      clearStatus();
+      const amountStr = document.getElementById("amountInput").value;
+      if (!amountStr || parseFloat(amountStr) <= 0) {
+        showStatus("Enter an amount", "error");
+        return;
+      }
+
+      if (direction === "solen-to-base") {
+        await bridgeSolenToBase(amountStr);
+      } else {
+        await bridgeBaseToSolen(amountStr);
+      }
+    }
+
+    // Solen -> Base: use Solen Wallet to sign bridge_to_base call
+    async function bridgeSolenToBase(amountStr) {
+      if (!window.solen || !solenAddress || !baseAddress) {
+        showStatus("Connect both wallets first", "error");
+        return;
+      }
+
+      const btn = document.getElementById("bridgeBtn");
+      btn.disabled = true;
+      btn.textContent = "Signing...";
+
+      try {
+        // Build args: base_recipient[20] + amount[16]
+        const baseAddrClean = baseAddress.replace("0x", "").toLowerCase();
+        const amountBase = BigInt(Math.round(parseFloat(amountStr) * 1e8));
+        const amountHex = amountBase.toString(16).padStart(32, "0");
+        // Convert to little-endian
+        let amountLE = "";
+        for (let i = amountHex.length - 2; i >= 0; i -= 2) {
+          amountLE += amountHex.substring(i, i + 2);
+        }
+        const argsHex = baseAddrClean + amountLE;
+
+        // Build operation for Solen Wallet
+        const operation = {
+          actions: [{
+            Call: {
+              target: BRIDGE_SYSTEM_ADDR,
+              method: "bridge_to_base",
+              args: argsHex,
+            }
+          }],
+          max_fee: 100000,
+        };
+
+        showStatus("Please approve in Solen Wallet...", "pending");
+        const result = await window.solen.signAndSubmit(operation);
+
+        showStatus(
+          `Bridged ${amountStr} SOLEN to Base! The relayer will mint wSOLEN to ${baseAddress.slice(0,8)}...`,
+          "success"
+        );
+        await fetchSolenBalance();
+      } catch (err) {
+        showStatus("Bridge failed: " + err.message, "error");
+      }
+
+      btn.disabled = false;
+      btn.textContent = "Bridge to Base";
+    }
+
+    // Base -> Solen: use MetaMask to burn wSOLEN
+    async function bridgeBaseToSolen(amountStr) {
+      if (!baseSigner || !solenAddressHex) {
+        showStatus("Connect both wallets first", "error");
+        return;
+      }
+
+      const btn = document.getElementById("bridgeBtn");
+      btn.disabled = true;
+
+      try {
+        const amount = ethers.parseUnits(amountStr, 8);
+        const solenRecipient = "0x" + solenAddressHex;
+
+        // Approve
+        btn.textContent = "Approving...";
+        const wSOLEN = new ethers.Contract(WSOLEN_ADDRESS, WSOLEN_ABI, baseSigner);
+        const allowance = await wSOLEN.allowance(baseAddress, BRIDGE_ADDRESS);
+        if (allowance < amount) {
+          showStatus("Approving wSOLEN...", "pending");
+          const approveTx = await wSOLEN.approve(BRIDGE_ADDRESS, amount);
+          await approveTx.wait();
+        }
+
+        // Bridge
+        btn.textContent = "Bridging...";
+        showStatus("Confirm in MetaMask...", "pending");
+        const bridge = new ethers.Contract(BRIDGE_ADDRESS, BRIDGE_ABI, baseSigner);
+        const tx = await bridge.bridgeToSolen(solenRecipient, amount);
+        showStatus("Waiting for confirmation...", "pending");
+        await tx.wait();
+
+        showStatus(
+          `Burned ${amountStr} wSOLEN! The relayer will release SOLEN to ${solenAddress.slice(0,8)}...`,
+          "success"
+        );
+        await fetchWsolenBalance();
+      } catch (err) {
+        showStatus("Bridge failed: " + (err.reason || err.message), "error");
+      }
+
+      btn.disabled = false;
+      btn.textContent = "Bridge to Solen";
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById("statusMsg");
+      el.textContent = msg;
+      el.className = "bridge-status " + type;
+    }
+    function clearStatus() {
+      document.getElementById("statusMsg").className = "bridge-status";
+    }
+
+    function base58ToHex(b58) {
+      const ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+      let result = new Uint8Array(32);
+      let digits = [];
+      for (const c of b58) {
+        const idx = ALPHABET.indexOf(c);
+        if (idx < 0) throw new Error("Invalid base58: " + c);
+        let carry = idx;
+        for (let i = digits.length - 1; i >= 0; i--) {
+          carry += digits[i] * 58;
+          digits[i] = carry & 0xFF;
+          carry >>= 8;
+        }
+        while (carry > 0) { digits.unshift(carry & 0xFF); carry >>= 8; }
+      }
+      const offset = 32 - digits.length;
+      for (let i = 0; i < digits.length && i < 32; i++) result[offset + i] = digits[i];
+      return Array.from(result).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    // Check bridge stats on load
+    async function checkBridgeStats() {
+      try {
+        const p = new ethers.JsonRpcProvider("https://sepolia.base.org");
+        const bridge = new ethers.Contract(BRIDGE_ADDRESS, BRIDGE_ABI, p);
+        const stats = await bridge.bridgeStats();
+        document.getElementById("bridgedTotal").textContent = ethers.formatUnits(stats[0], 8) + " wSOLEN";
+      } catch {
+        document.getElementById("bridgedTotal").textContent = "Unknown";
+      }
+    }
+    checkBridgeStats();
+
+    // Auto-connect wallets if already approved
+    if (window.ethereum) {
+      window.ethereum.request({ method: "eth_accounts" }).then(accounts => {
+        if (accounts.length > 0) connectBaseWallet();
+      });
+    }
+    window.addEventListener("solen#initialized", () => {
+      if (window.solen) connectSolenWallet();
+    });
+    if (window.solen) connectSolenWallet();
+  </script>
+</body>
+</html>
