@@ -193,7 +193,7 @@
     const BRIDGE_ADDRESS = "0x114E53baa3A49A3D1F28DCaBdF27EF13EF19bbAD";
     const BASE_SEPOLIA_CHAIN_ID = "0x14a34";
     const SOLEN_RPC = "https://testnet-rpc.solenchain.io";
-    const BRIDGE_SYSTEM_ADDR = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03";
+    const BRIDGE_SYSTEM_ADDR = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03";
 
     const WSOLEN_ABI = [
       "function balanceOf(address) view returns (uint256)",
@@ -424,11 +424,18 @@
         showStatus("Please approve in Solen Wallet...", "pending");
         const result = await window.solen.signAndSubmit(operation);
 
-        showStatus(
-          `Bridged ${amountStr} SOLEN to Base! The relayer will mint wSOLEN to ${baseAddress.slice(0,8)}...`,
-          "success"
-        );
-        await fetchSolenBalance();
+        // Check if the wallet returned an error
+        if (result && result.error) {
+          showStatus("Transaction failed: " + result.error, "error");
+        } else if (result && result.accepted === false) {
+          showStatus("Transaction rejected: " + (result.reason || "unknown"), "error");
+        } else {
+          showStatus(
+            `Bridged ${amountStr} SOLEN to Base! The relayer will mint wSOLEN to ${baseAddress.slice(0,8)}...`,
+            "success"
+          );
+          await fetchSolenBalance();
+        }
       } catch (err) {
         showStatus("Bridge failed: " + err.message, "error");
       }
