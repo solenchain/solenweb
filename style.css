@@ -212,6 +212,47 @@ a:hover { color: var(--gold-light); }
   gap: 10px;
   flex-shrink: 0;
 }
+.hack-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 100%);
+  border-bottom: 1px solid rgba(245,166,35,0.2);
+  text-decoration: none;
+  transition: background .3s;
+}
+.hack-banner:hover {
+  background: linear-gradient(135deg, rgba(245,166,35,0.18) 0%, rgba(245,166,35,0.08) 100%);
+}
+.hack-banner-pulse {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(245,166,35,0.5);
+  animation: hack-ping 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes hack-ping {
+  0% { box-shadow: 0 0 0 0 rgba(245,166,35,0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(245,166,35,0); }
+  100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }
+}
+.hack-banner-text {
+  color: var(--gold-light);
+  font-size: .9rem;
+  font-weight: 600;
+}
+.hack-banner-cta {
+  color: var(--gold);
+  font-size: .85rem;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  .hack-banner { flex-wrap: wrap; text-align: center; }
+}
+
 .btn-sm {
   padding: 8px 18px !important;
   font-size: 0.85rem !important;
