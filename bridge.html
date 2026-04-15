@@ -274,19 +274,44 @@
         return;
       }
       try {
+        clearStatus();
         const accounts = await window.solen.connect();
-        if (accounts.length > 0) {
-          solenAddress = accounts[0];
-          solenAddressHex = base58ToHex(solenAddress);
-          document.getElementById("solenWalletBox").classList.add("connected");
-          document.getElementById("solenWalletStatus").innerHTML =
-            `<span class="addr">${solenAddress.slice(0,6)}...${solenAddress.slice(-4)}</span>`;
-          await fetchSolenBalance();
-          updateUI();
+        if (accounts && accounts.length > 0) {
+          onSolenConnected(accounts[0]);
+        } else {
+          // Wallet popup is open — wait and retry via getAccounts
+          showStatus("Approve connection in Solen Wallet...", "pending");
+          let retries = 0;
+          const poll = setInterval(async () => {
+            retries++;
+            try {
+              const accts = await window.solen.getAccounts();
+              if (accts && accts.length > 0) {
+                clearInterval(poll);
+                clearStatus();
+                onSolenConnected(accts[0]);
+              } else if (retries > 30) {
+                clearInterval(poll);
+                clearStatus();
+              }
+            } catch { clearInterval(poll); clearStatus(); }
+          }, 1000);
         }
       } catch (err) {
+        // Don't show persistent error — user might retry
         showStatus("Solen Wallet: " + err.message, "error");
+        setTimeout(clearStatus, 3000);
       }
+    }
+
+    function onSolenConnected(address) {
+      solenAddress = address;
+      solenAddressHex = base58ToHex(solenAddress);
+      document.getElementById("solenWalletBox").classList.add("connected");
+      document.getElementById("solenWalletStatus").innerHTML =
+        `<span class="addr">${solenAddress.slice(0,6)}...${solenAddress.slice(-4)}</span>`;
+      fetchSolenBalance();
+      updateUI();
     }
 
     async function fetchSolenBalance() {
