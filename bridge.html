@@ -181,6 +181,8 @@
           <a href="https://basescan.org/address/0xFaa59fbA59E8dEb2e1264f3efcd5a3675F6986a9" target="_blank">wSOLEN on BaseScan</a>
           &middot;
           <a href="https://basescan.org/address/0x076b3977561a8eDb6E92CCA479104DD62DdaFf7C" target="_blank">Bridge on BaseScan</a>
+          &middot;
+          <a href="#" onclick="addToMetaMask(); return false;">Add wSOLEN to MetaMask</a>
         </p>
       </div>
     </div>
@@ -194,6 +196,21 @@
     const BASE_CHAIN_ID = "0x2105";
     const SOLEN_RPC = "https://rpc.solenchain.io";
     const BRIDGE_SYSTEM_ADDR = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03";
+
+    async function addToMetaMask() {
+      if (!window.ethereum) { alert("MetaMask not detected"); return; }
+      try {
+        await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: { type: "ERC20", options: {
+            address: WSOLEN_ADDRESS,
+            symbol: "wSOLEN",
+            decimals: 8,
+            image: "https://solenchain.io/solenlogo.png"
+          }}
+        });
+      } catch (e) { console.error(e); }
+    }
 
     const WSOLEN_ABI = [
       "function balanceOf(address) view returns (uint256)",
