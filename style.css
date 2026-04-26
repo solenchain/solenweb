@@ -5,11 +5,11 @@
   --gold: #f5a623;
   --gold-light: #ffd080;
   --gold-dark: #c47d10;
-  --bg: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-section: #0e0e16;
-  --text: #e8e8ed;
-  --text-dim: #9a9ab0;
+  --bg: #11141b;
+  --bg-card: #1a1e27;
+  --bg-section: #161a22;
+  --text: #ecedf2;
+  --text-dim: #a4a9b8;
   --radius: 12px;
   --max-w: 1120px;
 }
@@ -36,7 +36,7 @@ a:hover { color: var(--gold-light); }
   transition: background .3s, backdrop-filter .3s;
 }
 .nav.scrolled {
-  background: rgba(10, 10, 15, .85);
+  background: rgba(17, 20, 27, .85);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(245, 166, 35, .1);
 }
@@ -101,9 +101,9 @@ a:hover { color: var(--gold-light); }
 .btn-sm { padding: 8px 20px; font-size: .85rem; }
 .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: #0a0a0f;
+  color: #11141b;
 }
-.btn-primary:hover { color: #0a0a0f; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(245, 166, 35, .3); }
+.btn-primary:hover { color: #11141b; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(245, 166, 35, .3); }
 .btn-outline {
   background: transparent; border: 1.5px solid rgba(245, 166, 35, .4);
   color: var(--gold);
