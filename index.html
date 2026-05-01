@@ -60,6 +60,7 @@
             <a href="#faq">FAQ</a>
             <a href="#whitepaper">Whitepaper</a>
             <a href="#tokenomics">Tokenomics</a>
+            <a href="#staking">Staking</a>
             <a href="#ecosystem">Ecosystem</a>
             <a href="#community">Community</a>
             <a href="Solen_Stress_Test_Report.pdf" target="_blank" rel="noopener">Stress Test Report</a>
@@ -619,6 +620,106 @@
 
       <div class="token-cta">
         <a href="https://docs.solenchain.io/tokenomics/overview/" class="btn btn-outline" target="_blank" rel="noopener">Full Tokenomics Details &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKING -->
+  <section class="section section-dark" id="staking">
+    <div class="container">
+      <h2 class="section-title">Staking</h2>
+      <p class="section-sub">Two ways to earn validator rewards on Solen &mdash; pick the model that fits your style.</p>
+
+      <div class="grid grid-2">
+        <div class="card eco-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+              <rect x="4" y="9" width="16" height="9" rx="1.4" fill="currentColor" stroke="none" opacity=".18"/>
+              <rect x="4" y="9" width="16" height="9" rx="1.4"/>
+              <circle cx="8" cy="13.5" r="1" fill="currentColor" stroke="none"/>
+              <path d="M11 13h6"/>
+              <path d="M11 16h4"/>
+              <path d="M12 9V5m0 0-2.4 2.4M12 5l2.4 2.4"/>
+            </svg>
+          </div>
+          <h3>Validator Delegation</h3>
+          <p>Delegate SOLEN directly to the validator of your choice. Native, simple, no wrapper token.</p>
+          <ul class="feature-list">
+            <li>Pick the specific validator you back</li>
+            <li>Rewards auto-credit at each epoch boundary</li>
+            <li>Validator commission set per-operator</li>
+            <li>7-epoch unbonding window on unstake</li>
+          </ul>
+          <p class="card-note">Best for users who want direct control over which validator they support, or who run their own validator and want to self-stake.</p>
+          <a href="https://docs.solenchain.io/guides/exchange-integration/" class="link" target="_blank" rel="noopener">How delegation works &rarr;</a>
+        </div>
+
+        <div class="card eco-card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3c-3 4-6 6.8-6 10.5a6 6 0 0 0 12 0C18 9.8 15 7 12 3z" fill="currentColor" stroke="none" opacity=".25"/>
+              <path d="M12 3c-3 4-6 6.8-6 10.5a6 6 0 0 0 12 0C18 9.8 15 7 12 3z"/>
+              <path d="M9 13.2c.6.6 1.4.9 2.2.9.8 0 1.6-.3 2.2-.9.7-.6 1.4-.6 2 0"/>
+              <path d="M9.4 9.5c1-.9 2.1-.9 2.6 0 .5.9 1.6.9 2.6 0"/>
+            </svg>
+          </div>
+          <h3>Liquid Staking <span class="card-badge">stSOLEN</span></h3>
+          <p>Deposit SOLEN, receive <strong>stSOLEN</strong> &mdash; a transferable receipt token whose value grows as the pool earns rewards. Stay liquid while you stake.</p>
+          <ul class="feature-list">
+            <li>Round-robin delegation across 11 genesis validators</li>
+            <li>Rewards compound automatically into the rate</li>
+            <li>10% protocol fee &mdash; 90% goes to stakers</li>
+            <li>stSOLEN is a standard SRC-20 &mdash; transfer it, hold it, use it in DeFi</li>
+            <li>7-epoch unbonding queue on unstake</li>
+          </ul>
+          <p class="card-note">Best for users who want yield without picking validators, or who want their staked position to remain transferable and composable.</p>
+          <a href="https://stake.solenchain.io" class="link" target="_blank" rel="noopener">stake.solenchain.io &rarr;</a>
+        </div>
+      </div>
+
+      <div class="staking-compare">
+        <h3 class="staking-compare-title">Side by side</h3>
+        <table class="staking-compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Validator Delegation</th>
+              <th>Liquid Staking (stSOLEN)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Receive a transferable token</td>
+              <td>No</td>
+              <td>Yes &mdash; stSOLEN</td>
+            </tr>
+            <tr>
+              <td>Pick the validator yourself</td>
+              <td>Yes, any validator</td>
+              <td>No &mdash; round-robin allowlist</td>
+            </tr>
+            <tr>
+              <td>Protocol fee on rewards</td>
+              <td>None (validator commission only)</td>
+              <td>10% (90% to stakers)</td>
+            </tr>
+            <tr>
+              <td>Compound rewards</td>
+              <td>Manual re-stake</td>
+              <td>Automatic via exchange-rate growth</td>
+            </tr>
+            <tr>
+              <td>Exit time</td>
+              <td>7 epochs (~24 min)</td>
+              <td>7 epochs unbonding queue</td>
+            </tr>
+            <tr>
+              <td>Use in DeFi</td>
+              <td>No</td>
+              <td>Yes &mdash; stSOLEN is composable</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
